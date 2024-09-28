@@ -62,9 +62,9 @@ Here are some images demonstrating the Digital Board Pro setup:
 
 ### IR Pen in Action
 
-  <img src="https://github.com/user-attachments/assets/643ecd83-eb5e-434a-aef4-b43d8f0e4b35" alt="Project Demonstration" width="50" height="30">
-### IR Pen in Action
-  <img src="https://github.com/user-attachments/assets/7d273ba3-347e-45f8-8311-1e09d52a39a0" alt="Project Demonstration" width="50" height="30">
+<img src="https://github.com/user-attachments/assets/643ecd83-eb5e-434a-aef4-b43d8f0e4b35" alt="Project Demonstration" width="300" height="200">
+
+<img src="https://github.com/user-attachments/assets/7d273ba3-347e-45f8-8311-1e09d52a39a0" alt="Project Demonstration" width="300" height="200">
 
 *The IR pen being used on a flat surface*
 
