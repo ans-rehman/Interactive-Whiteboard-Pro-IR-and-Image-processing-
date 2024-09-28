@@ -14,7 +14,7 @@ Revolutionizing Whiteboards: Geometrical Transformation and IR Pen Control for D
 
 Check out a live demonstration of the Digital Board Pro in action on YouTube:
 
-[[Project Demonstration](![image](![360_F_474059464_qldYuzxaUWEwNTtYBJ44VN89ARuFktHW](https://github.com/user-attachments/assets/d2d48492-f797-4d83-ae72-91f24fcf85e3)))](https://youtu.be/FpK8PYU6Rsc?si=9AVkPFdNyOAiSQc4)
+[![Project Demonstration](![360_F_474059464_qldYuzxaUWEwNTtYBJ44VN89ARuFktHW])](https://youtu.be/FpK8PYU6Rsc?si=9AVkPFdNyOAiSQc4)
 
 > Click the image above to watch the video.
 
