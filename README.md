@@ -94,3 +94,8 @@ We welcome contributions! Please submit any pull requests or open an issue for a
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
+
+## Contact
+
+If there is any issue regarding the project and code you may email me for support and discussion. Thanks 
+[!EmailMe](mailto:ans.rehman.engineer@gmail.com)
