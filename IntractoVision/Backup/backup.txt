@@ -1,0 +1,116 @@
+import cv2
+import numpy as np
+import pyautogui
+import wi_prt as wi
+# scren demension
+
+# app = wi.App()
+# app.mainloop()
+s_width, s_height =pyautogui.size()
+# pyautogui.FAILSAFE = False
+# Initialize the webcam
+cap = cv2.VideoCapture(1)  # Use 0 for the default camera, change if necessary
+
+# Create a blob detector
+# params = cv2.SimpleBlobDetector_Params()
+# params.filterByColor = True
+# params.blobColor = 255  # White blobs on a black background
+# detector = cv2.SimpleBlobDetector_create(params)
+t=True
+cordinates = []
+
+while True:
+    if cv2.waitKey(1) & 0xFF == ord('d'):
+        cordinates = []
+    cx = -100
+    cy = -100
+    # Capture a frame from the webcam
+    ret, frame = cap.read()
+    c_height , c_width, _ = frame.shape
+
+    # frame = cv2.flip(frame,1) using laptops webcam mirror selfie
+    # Convert the frame to grayscale
+    # hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+    # cv2.imshow('frame_orignal', frame)
+
+    gray_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    cv2.imshow('grey', gray_frame)
+    # Threshold the grayscale frame to detect the IR LED blob
+    _ , mask = cv2.threshold(gray_frame, 170, 255, cv2.THRESH_BINARY)
+    cv2.imshow('thresh', mask)
+
+    # Define the HSV range for the red laser color
+    # lower_val = np.array([150, 110, 150])
+    # upper_val = np.array([255, 255, 255])
+    # Create a mask to isolate the laser spot
+    # mask = cv2.inRange(hsv, lower_val, upper_val)
+    # cv2.imshow('thresh', mask)
+
+    # Find contours in the mask
+    contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    if contours:
+            # Find the largest contour (IR laser spot)
+            largest_contour = max(contours, key=cv2.contourArea)
+            # print(largest_contour)
+            # Calculate the centroid of the IR laser spot
+            M = cv2.moments(largest_contour)
+            if M["m00"] > 0:
+                try:
+                    cx = int(M["m10"] / M["m00"])
+                    cy = int(M["m01"] / M["m00"])
+                except ZeroDivisionError:
+                    continue
+                if len(cordinates)<2:
+                    cordinates.append((cx,cy))
+                    if cv2.waitKey() & 0xFF == ord('n'):
+                         pass
+                #     print(cordinates, len(cordinates))
+                # pyautogui.moveTo(fx,fy)
+                # pyautogui.mouseDown(fx,fy)
+                # Draw a circle at the centroid on the frame
+                # cv2.circle(frame, (cx, cy), 8, (0, 255, 0), -1)
+    
+    # else:
+    #     if t==False:
+    #          t=True
+    #          pyautogui.mouseUp()
+
+
+    # Display the frame with the detected LED
+    # '''
+    if len(cordinates)==2:
+        width=abs(cordinates[0][0]-cordinates[1][0])
+        height=abs(cordinates[0][1]-cordinates[1][1])
+        # print(width, '\n', height,'\n', cordinates)
+        bx = cx - cordinates[1][0]
+        by = cy - cordinates[0][1]
+        
+        fx=((s_width/width)*bx)
+        fy =((s_height/height)*by) 
+        cv2.rectangle(frame,cordinates[0],cordinates[1], color=(0,255,0), thickness=5)
+        # print(cordinates[0][0])
+        if (cx >= 0 )and (cx < cordinates[0][0]) and (cx > cordinates[1][0] )and (cy > cordinates[0][1]) and (cy < cordinates[1][1]):
+            cv2.circle(frame, (cx, cy), 8, (0, 255, 0), -1)
+            t=False
+            pyautogui.mouseDown(fx,fy)
+            # print('pen down')
+            # pyautogui.moveTo(fx,fy)
+            # pyautogui.click(fx,fy)
+        else:
+            # pyautogui.mouseUp()
+            cv2.circle(frame, (cx, cy), 8, (0, 0, 255), -1)
+
+            if t==False:
+                t=True
+                pyautogui.mouseUp()
+
+    # '''
+             
+    # Exit the loop if the 'q' key is pressed
+    cv2.imshow('IR LED Tracking', frame)
+    if cv2.waitKey(1) & 0xFF == ord('q'):
+        break
+
+# Release the webcam and close all OpenCV windows
+cap.release()
+cv2.destroyAllWindows()
